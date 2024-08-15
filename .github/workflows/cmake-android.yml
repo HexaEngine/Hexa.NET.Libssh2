@@ -57,9 +57,9 @@ jobs:
       run: |
          cd libssh2
          git clone https://github.com/microsoft/vcpkg.git
-         .\vcpkg\bootstrap-vcpkg.bat
-         .\vcpkg\vcpkg.exe install openssl:x64-android zlib:x64-android
-         .\vcpkg\vcpkg.exe install openssl:arm64-android zlib:arm64-android
+         ./vcpkg/bootstrap-vcpkg.sh
+         ./vcpkg/vcpkg install openssl:x64-android zlib:x64-android
+         ./vcpkg/vcpkg install openssl:arm64-android zlib:arm64-android
 
     - name: Build libssh2 for arm64-v8a
       run: |
