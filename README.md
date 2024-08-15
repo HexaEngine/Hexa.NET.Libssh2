@@ -18,10 +18,6 @@ dotnet add package Hexa.NET.Libssh2
 
 Alternatively, you can visit the [NuGet package page](https://www.nuget.org/packages/Hexa.NET.Libssh2) and follow the instructions there.
 
-## Usage
-
-After installation, you can use Hexa.NET.Libssh2 to load and manipulate images in your SDL2-based C# applications, with direct access to the underlying SDL_image functions.
-
 ## Contributing
 
 Contributions are welcome! If you encounter any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
