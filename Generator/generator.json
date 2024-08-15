@@ -1,0 +1,43 @@
+{
+  "Namespace": "Hexa.NET.Libssh2",
+  "ApiName": "Libssh2",
+  "LibName": "Libssh2",
+  "EnableExperimentalOptions": true,
+  "GenerateConstructorsForStructs": true,
+  "GenerateSizeOfStructs": false,
+  "GeneratePlaceholderComments": false,
+  "GenerateMetadata": true,
+  "ImportType": "VTable",
+  "ConstantNamingConvention": "Unknown",
+  "KnownConstantNames": {
+  },
+  "KnownEnumValueNames": {
+    "": ""
+  },
+  "KnownEnumPrefixes": {
+  },
+  "KnownExtensionPrefixes": {
+  },
+  "KnownExtensionNames": {
+  },
+  "KnownStructMethods": {
+  },
+  "IgnoredParts": [
+    "bit",
+    "Libssh2"
+  ],
+  "PreserveCaps": [
+    ""
+  ],
+
+  "IgnoredTypes": [],
+  "TypeMappings": {
+    "ssize_t": "nint",
+    "libssh2_uint64_t": "ulong",
+    "libssh2_int64_t": "long",
+    "time_t": "long",
+    "libssh2_publickey_attribute": "Libssh2PublickeyAttribute"
+  },
+  "IgnoredFunctions": [
+  ]
+}
