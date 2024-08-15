@@ -71,6 +71,10 @@ jobs:
                 -DCMAKE_ANDROID_NDK_TOOLCHAIN_VERSION=clang \
                 -DCMAKE_ANDROID_STL_TYPE=c++_shared \
                 -DCMAKE_ANDROID_API=21 \
+                -DBUILD_SHARED_LIBS=ON \
+                -DBUILD_STATIC_LIBS=OFF \
+                -DBUILD_TESTING=OFF \
+                -DBUILD_EXAMPLES=OFF \
                 -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake" \
                 -S ./ \
                 -B ./build/arm64-v8a
@@ -86,6 +90,10 @@ jobs:
                 -DCMAKE_ANDROID_NDK_TOOLCHAIN_VERSION=clang \
                 -DCMAKE_ANDROID_STL_TYPE=c++_shared \
                 -DCMAKE_ANDROID_API=21 \
+                -DBUILD_SHARED_LIBS=ON \
+                -DBUILD_STATIC_LIBS=OFF \
+                -DBUILD_TESTING=OFF \
+                -DBUILD_EXAMPLES=OFF \
                 -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake" \
                 -S ./ \
                 -B ./build/x86_64
