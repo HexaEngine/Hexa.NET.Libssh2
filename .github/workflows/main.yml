@@ -1,0 +1,82 @@
+name: Build libssh2 Libraries
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            arch: x86_64
+          - os: ubuntu-latest
+            arch: arm64
+          - os: windows-latest
+            arch: x86_64
+            triplet: x64-windows
+            arch-cmake: x64
+          - os: windows-latest
+            arch: x86
+            triplet: x86-windows
+            arch-cmake: win32
+          - os: windows-latest
+            arch: arm64
+            triplet: arm64-windows
+            arch-cmake: arm64
+          - os: macos-latest
+            arch: x86_64
+          - os: macos-latest
+            arch: arm64
+      
+    steps:
+    - uses: actions/checkout@v4.1.7
+      with:
+        repository: 'libssh2/libssh2'
+        path: 'libssh2'
+        ref: 'libssh2-1.11.0'
+        submodules: true
+
+    - name: Install Dependencies on Ubuntu
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake openssl libssl-dev zlib1g-dev
+
+    - name: Install Dependencies on macOS
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew install cmake openssl zlib
+
+    - name: Install dependencies on Windows
+      if: matrix.os == 'windows-latest'
+      run: |
+         cd libssh2
+         git clone https://github.com/microsoft/vcpkg.git
+         .\vcpkg\bootstrap-vcpkg.bat
+         .\vcpkg\vcpkg.exe install openssl:${{ matrix.triplet }} zlib:${{ matrix.triplet }}
+
+    - name: Configure libssh2 with CMake
+      if: matrix.os == 'windows-latest'
+      run: |
+        cd libssh2
+        cmake -S ./ -B ./build -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake" -DBUILD_SHARED_LIBS=ON -DBUILD_STATIC_LIBS=OFF -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -A ${{ matrix.arch-cmake }}
+        
+    - name: Configure libssh2 with CMake
+      if: matrix.os != 'windows-latest'
+      run: |
+        cd libssh2
+        cmake -S ./ -B ./build -DBUILD_SHARED_LIBS=ON -DBUILD_STATIC_LIBS=OFF -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF
+
+    - name: Build libssh2
+      run: cmake --build libssh2/build --config Release
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4.3.4
+      with:
+        name: ${{ matrix.os }}-${{ matrix.arch }}-artifacts 
+        path: |
+          libssh2/build/src/Release/*.dll
+          libssh2/build/src/*.so
+          libssh2/build/src/*.dylib
+        if-no-files-found: ignore # 'warn' or 'ignore' or 'error'
